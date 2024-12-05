@@ -53,25 +53,15 @@
             e salve Mono
           </h2>
           <div class="input">
+            <label class="message" for="name">Digite seu nome: </label>
             <div class="input-wrapper">
-              {% if not request.user.is_authenticated %}
-              <p class="message" for="name">Faça login:</p>
-              <a href="/admin/login/?next=/game">login</a>
-              {% endif %}
               <input
-                id="logged"
-                type="hidden"
-                value="{% if request.user.is_authenticated %}logged{% else %}unlogged{% endif%}"
-              />
-              <input
-                id="name"
-                type="hidden"
                 value="{{request.user.username}}"
+                id="name"
+                type="text"
+                maxlength="100"
               />
             </div>
-            <label class="error" for="name"
-              >Por favor, logue antes de acessar</label
-            >
           </div>
           <div class="controllers">
             <button class="clickable selectable" type="button" id="play">
