@@ -246,13 +246,6 @@ const resetGame = () => {
 };
 
 const startGame = () => {
-  if (HTMLElements.loggedInput.value == "unlogged") {
-    HTMLElements.nameInputWrapper.setAttribute("data-status", "error");
-    return;
-  } else {
-    HTMLElements.nameInputWrapper.setAttribute("data-status", "normal");
-  }
-
   tracks.background.play();
   resetGame();
   HTMLElements.popUpWrapper.setAttribute("data-state", "closed");
@@ -262,10 +255,25 @@ const startGame = () => {
   generateCards();
 };
 
+const getCookie = (name) => {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith(name + "=")) {
+        cookieValue = cookie.substring(name.length + 1);
+        break;
+      }
+    }
+  }
+  return cookieValue;
+};
+
 const saveGame = async () => {
   const now = new Date();
   username = HTMLElements.nameInput.value;
-  
+
   const data = {
     username,
     flips_quantity: flips,
@@ -280,6 +288,7 @@ const saveGame = async () => {
       body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
+        "X-CSRFToken": getCookie("csrftoken"),
       },
     });
     console.log("Dados salvos com sucesso:", response);
@@ -304,6 +313,15 @@ HTMLElements.continueButton.addEventListener("click", () => {
 HTMLElements.quitButton.addEventListener("click", () => {
   HTMLElements.popUpWrapper.setAttribute("data-state", "opened");
   HTMLElements.pauseWrapper.setAttribute("data-state", "closed");
+});
+
+HTMLElements.pauseWrapper.addEventListener("wheel", (event) => {
+  if (event.wheelDelta > 0) {
+    HTMLElements.pauseWrapper.setAttribute("data-map", "small");
+    return;
+  }
+
+  HTMLElements.pauseWrapper.setAttribute("data-map", "large");
 });
 
 function getRootUrl() {
