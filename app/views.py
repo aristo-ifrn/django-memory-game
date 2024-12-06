@@ -38,7 +38,7 @@ def add(request):
         used_time=data['used_time'],
         date=date,
         has_completed=data['has_completed'],
-        user_id=request.user.id
+        user=request.user
       )
       player.save()
       return JsonResponse({'status': 'success'}, status=201)
