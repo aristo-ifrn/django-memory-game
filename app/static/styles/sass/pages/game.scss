@@ -308,8 +308,8 @@ body {
   z-index: var(--z-index-modal);
 
   background: url("../../../assets/images/map.webp") var(--colors-black);
-  background-repeat: no-repeat;
-  background-clip: border-box;
+  background-position: center center;
+  background-size: cover;
 
   transition: 0.3s background ease-in-out, opacity 0.15s linear;
 
@@ -322,16 +322,6 @@ body {
   &[data-state="opened"] {
     z-index: var(--z-index-modal);
     opacity: 1;
-  }
-
-  &[data-map="small"] {
-    background-position: 60% 30%;
-    background-size: 140%;
-  }
-
-  &[data-map="large"] {
-    background-size: 100%;
-    background-position: center center;
   }
 
   ul {

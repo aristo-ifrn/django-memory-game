@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib import auth
 
-class Player(models.Model):
+class Plays(models.Model):
   username=models.CharField(max_length=100)
   flips_quantity=models.IntegerField()
   used_time=models.IntegerField()

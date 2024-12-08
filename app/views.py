@@ -2,15 +2,15 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.utils.dateparse import parse_datetime
 from django.views.decorators.csrf import csrf_exempt
-from .models import Player
+from .models import Plays
 import json
 
 def index(request): 
   return render(request, "index.html")
 
 def ranking(request):
-  players = Player.objects.all().order_by("-has_completed", "flips_quantity", "-used_time", "date")
-  return render(request, "ranking.html", {"players": players})
+  plays = Plays.objects.all().order_by("-has_completed", "flips_quantity", "-used_time", "date")
+  return render(request, "ranking.html", {"plays": plays})
 
 def game(request):
   if request.user.is_authenticated:
@@ -20,8 +20,8 @@ def game(request):
 
 def get(request):
   if request.method == 'GET':
-    players = Player.objects.all().order_by("-has_completed", "flips_quantity", "-used_time", "date").values()
-    return JsonResponse(list(players), safe=False)
+    plays = Plays.objects.all().order_by("-has_completed", "flips_quantity", "-used_time", "date").values()
+    return JsonResponse(list(plays), safe=False)
   return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
 
 def add(request):
@@ -32,7 +32,7 @@ def add(request):
       if not date:
         return JsonResponse({'status': 'error', 'message': 'Data inválida'}, status=400)
       
-      player = Player(
+      play = Plays(
         username=data['username'],
         flips_quantity=data['flips_quantity'],
         used_time=data['used_time'],
@@ -40,7 +40,7 @@ def add(request):
         has_completed=data['has_completed'],
         user=request.user
       )
-      player.save()
+      play.save()
       return JsonResponse({'status': 'success'}, status=201)
     except Exception as e:
       print(f"Erro: {e}")  # Log do erro

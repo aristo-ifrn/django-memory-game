@@ -66,6 +66,10 @@ body {
     padding: var(--space-4);
   }
 
+  td.noData {
+    text-align: center;
+  }
+
   thead {
     position: sticky;
     top: var(--space-4);
