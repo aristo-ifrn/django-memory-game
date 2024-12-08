@@ -11,7 +11,10 @@
       href="{% static './assets/ico.ico' %}"
       type="image/x-icon"
     />
-    <link rel="stylesheet" href="{% static './styles/sass/globals.min.css' %}" />
+    <link
+      rel="stylesheet"
+      href="{% static './styles/sass/globals.min.css' %}"
+    />
     <link
       rel="stylesheet"
       href="{% static './styles/sass/pages/ranking.min.css' %}"
@@ -48,28 +51,25 @@
                 </tr>
               </thead>
               <tbody>
-                {% for x in players %}
+                {% for x in plays %}
                 <tr>
                   <td>{{ forloop.counter }}º</td>
                   <td>{{x.username}}</td>
                   <td>{{x.flips_quantity}}</td>
                   <td>
-                    {%if x.used_time >= 0%}
-                      {{x.used_time}} segundos
-                    {% else %}
-                      Sem tempo
-                    {% endif %}
+                    {%if x.used_time >= 0%} {{x.used_time}} segundos {% else %}
+                    Sem tempo {% endif %}
                   </td>
                   <td>{{x.date}}</td>
                   <td>
-                    <div class="dot 
-                    {%if x.has_completed%}
-                      completed
-                    {% else %}
-                      uncompleted
-                    {% endif %}
-                    "></div>
+                    <div
+                      class="dot {%if x.has_completed%} completed {% else %} uncompleted {% endif %}"
+                    ></div>
                   </td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="6" class="noData">Sem dados</td>
                 </tr>
                 {% endfor %}
               </tbody>

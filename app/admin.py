@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Player
+from .models import Plays
 
-class PlayerModel(admin.ModelAdmin):
+class PlaysModel(admin.ModelAdmin):
   list_display = ["username", "flips_quantity", "used_time", "has_completed"]
   list_filter = ["flips_quantity"]
   search_fields = ["username"]
 
-admin.site.register(Player, PlayerModel)
+admin.site.register(Plays, PlaysModel)
